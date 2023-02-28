@@ -12,32 +12,18 @@ class FourthCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final queryHeight = MediaQuery.of(context).size.height;
-    final queryWidth = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-          body: Stack(
-        children: [
-          Container(
-            width: queryWidth,
-            height: queryHeight,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/back.jpg'),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-              ),
-            ),
-          ),
-          const Obstacles3ks()
-        ],
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/back.jpg'), fit: BoxFit.cover)),
+      child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: const Scaffold(
+            backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: false,
+            body: Obstacles3ks()
       )),
     );
   }
