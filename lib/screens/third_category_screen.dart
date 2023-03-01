@@ -20,11 +20,9 @@ class ThirdCategory extends StatelessWidget {
       child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: const Scaffold(
-            backgroundColor: Colors.transparent,
-            resizeToAvoidBottomInset: false,
-            body: Obstacles3ks()
-
-      )),
+              backgroundColor: Colors.transparent,
+              resizeToAvoidBottomInset: false,
+              body: Obstacles3ks())),
     );
   }
 }
@@ -37,9 +35,11 @@ class Obstacles3ks extends StatefulWidget {
 }
 
 class _Obstacles3ksState extends State<Obstacles3ks> {
-  double kilometersSlideValue = 147.5;
+  double kilometersSlideValue = 140;
   double heightSlideValue = 5;
   int regionIndex = -1;
+  String? autonomy;
+  int autonomityIndex = -1;
   int perepraviNK = 0;
   int perepravi1A = 0;
   int perepravi1B = 0;
@@ -59,15 +59,13 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-          height: 650,
+          height: 645,
           width: 360,
           decoration: const BoxDecoration(
               borderRadius: containerBorderRadius, color: themeColor),
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,15 +157,84 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
                     suggestionStyle: searchTextStyle,
                   ),
                 ),
-                // const SizedBox(
-                //   height: 8,
-                // ),
                 SizedBox(
                   height: 424,
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     children: [
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Автономность',
+                              style: mainTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Blue.withOpacity(0.2),
+                                blurRadius: 7,
+                                // offset: Offset(5, 5)
+                              )
+                            ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              alignment: Alignment.centerLeft,
+                              iconSize: 0.0,
+                              style: searchTextStyle,
+                              hint: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: Icon(Icons.route, color: Colors.black.withOpacity(0.5),),
+                                  ),
+                                  const SizedBox(width: 11,),
+                                  Text(
+                                    'Выберите подходящий вариант',
+                                    style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 13.5,
+                                        color: Grey.withOpacity(0.8)),
+                                  ),
+                                ],
+                              ),
+                              value: autonomy,
+                              items: autonomities,
+                              onChanged: (value) {
+                                setState(() {
+                                  autonomy = value;
+                                  autonomityIndex = autonomityValues.indexOf(value);
+                                });
+                                /*=> setState(() => autonomy = value)*/
+                              },
+                              isExpanded: true,
+                              borderRadius: BorderRadius.circular(15),
+                              dropdownColor: BlueAccent,
+                            ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
@@ -195,7 +262,7 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
                         height: 25,
                         decoration: BoxDecoration(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                                const BorderRadius.all(Radius.circular(20)),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -251,7 +318,7 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
                         height: 25,
                         decoration: BoxDecoration(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                                const BorderRadius.all(Radius.circular(20)),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -1359,25 +1426,29 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    int categoryRating = CategoryRating(
-                        kilometersSlideValue,
-                        heightSlideValue,
-                        regionIndex,
-                        perepraviNK,
-                        perepravi1A,
-                        perepravi1B,
-                        perevaliNK,
-                        perevali1A,
-                        perevali1B,
-                        vershiniNK,
-                        vershini1A,
-                        grebniNK,
-                        grebni1A,
-                        canyoniNK1A,
-                        canyoni1B,
-                        water,
-                        category);
-                    Get.to(EndingScreen(categoryRating: categoryRating));
+                    if (regionIndex != -1 && autonomityIndex != -1) {
+                      int categoryRating = CategoryRating(
+                          kilometersSlideValue,
+                          heightSlideValue,
+                          regionIndex,
+                          perepraviNK,
+                          perepravi1A,
+                          perepravi1B,
+                          perevaliNK,
+                          perevali1A,
+                          perevali1B,
+                          vershiniNK,
+                          vershini1A,
+                          grebniNK,
+                          grebni1A,
+                          canyoniNK1A,
+                          canyoni1B,
+                          water,
+                          autonomityIndex,
+                          category);
+                      Get.to(EndingScreen(categoryRating: categoryRating));
+                    }
+                    else return;
                   },
                   style: ElevatedButton.styleFrom(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -1417,24 +1488,30 @@ int CategoryRating(
     int canyoniNK1A,
     int canyoni1B,
     bool water,
+    int autonomityIndex,
     int category) {
   double localObstacles = perepraviNK * 0.5 +
-      perepravi1A + perepravi1B * 4.0 +
+      perepravi1A +
+      perepravi1B * 4.0 +
       perevaliNK * 2.0 +
-      perevali1A * 4.0 + perevali1B * 6.0 +
-      vershiniNK * 4.0 + vershini1A * 5.0 +
-      grebniNK * 4.0 + grebni1A * 5.0 +
-      canyoniNK1A * 1.0 + canyoni1B * 3.0;
-  double extendedObstacles = Kt[regionIndex] *
-      PP_points[category] *
-      kilometersSlideValue /
-      Arr_L[category];
+      perevali1A * 4.0 +
+      perevali1B * 6.0 +
+      vershiniNK * 4.0 +
+      vershini1A * 5.0 +
+      grebniNK * 4.0 +
+      grebni1A * 5.0 +
+      canyoniNK1A * 1.0 +
+      canyoni1B * 3.0;
   if (water == true) localObstacles += water_points[category];
   if (localObstacles.toInt() > LP_points[category]) {
     int localObstacles = LP_points[category];
   }
+  double extendedObstacles = Kt[regionIndex] *
+      PP_points[category] *
+      kilometersSlideValue /
+      Arr_L[category];
   final integralRating =
-      geograficalIndicator[regionIndex] * (1 + heightSlideValue / 12);
+      geograficalIndicator[regionIndex] * (1 + heightSlideValue / 12) * autonomyOpacity[autonomityIndex];
   int categoryRating = localObstacles.toInt() +
       extendedObstacles.toInt() +
       integralRating.toInt();

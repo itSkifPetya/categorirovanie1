@@ -23,23 +23,25 @@ class FourthCategory extends StatelessWidget {
           child: const Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
-            body: Obstacles3ks()
+            body: Obstacles4ks()
       )),
     );
   }
 }
 
-class Obstacles3ks extends StatefulWidget {
-  const Obstacles3ks({Key? key}) : super(key: key);
+class Obstacles4ks extends StatefulWidget {
+  const Obstacles4ks({Key? key}) : super(key: key);
 
   @override
-  State<Obstacles3ks> createState() => _Obstacles3ksState();
+  State<Obstacles4ks> createState() => _Obstacles4ksState();
 }
 
-class _Obstacles3ksState extends State<Obstacles3ks> {
+class _Obstacles4ksState extends State<Obstacles4ks> {
   double kilometersSlideValue = 170;
   double heightSlideValue = 5;
   int regionIndex = -1;
+  var autonomy;
+  int autonomityIndex = -1;
   int perepravi1A = 0;
   int perepravi1B = 0;
   int perepravi2A = 0;
@@ -57,17 +59,6 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
   int canyoni2A = 0;
   bool water = false;
   int category = 4 - 1;
-
-  // void initState() {
-  //   super.initState();
-  //
-  //   KeyboardVisibilityNotification().addNewListener(
-  //     onChange: (bool isKeyboardVisible) {
-  //       return isKeyboardVisible;
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -170,15 +161,84 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
                     suggestionStyle: searchTextStyle,
                   ),
                 ),
-                // const SizedBox(
-                //   height: 8,
-                // ),
                 SizedBox(
                   height: 424,
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     children: [
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Автономность',
+                              style: mainTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Blue.withOpacity(0.2),
+                                blurRadius: 7,
+                                // offset: Offset(5, 5)
+                              )
+                            ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              alignment: Alignment.centerLeft,
+                              iconSize: 0.0,
+                              style: searchTextStyle,
+                              hint: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: Icon(Icons.route, color: Colors.black.withOpacity(0.5),),
+                                  ),
+                                  const SizedBox(width: 11,),
+                                  Text(
+                                    'Выберите подходящий вариант',
+                                    style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 13.5,
+                                        color: Grey.withOpacity(0.8)),
+                                  ),
+                                ],
+                              ),
+                              value: autonomy,
+                              items: autonomities,
+                              onChanged: (value) {
+                                setState(() {
+                                  autonomy = value;
+                                  autonomityIndex = autonomityValues.indexOf(value);
+                                });
+                                /*=> setState(() => autonomy = value)*/
+                              },
+                              isExpanded: true,
+                              borderRadius: BorderRadius.circular(15),
+                              dropdownColor: BlueAccent,
+                            ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
@@ -1624,28 +1684,32 @@ class _Obstacles3ksState extends State<Obstacles3ks> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    int categoryRating = CategoryRating(
-                        kilometersSlideValue,
-                        heightSlideValue,
-                        regionIndex,
-                        perepravi2A,
-                        perepravi1A,
-                        perepravi1B,
-                        perevali2A,
-                        perevali1A,
-                        perevali1B,
-                        vershiniNK,
-                        vershini1A,
-                        vershini1B,
-                        grebniNK,
-                        grebni1A,
-                        grebni1B,
-                        canyoniNK1A,
-                        canyoni1B,
-                        canyoni2A,
-                        water,
-                        category);
-                    Get.to(EndingScreen(categoryRating: categoryRating));
+                    if (regionIndex != -1 && autonomityIndex != -1) {
+                      int categoryRating = CategoryRating(
+                          kilometersSlideValue,
+                          heightSlideValue,
+                          regionIndex,
+                          perepravi2A,
+                          perepravi1A,
+                          perepravi1B,
+                          perevali2A,
+                          perevali1A,
+                          perevali1B,
+                          vershiniNK,
+                          vershini1A,
+                          vershini1B,
+                          grebniNK,
+                          grebni1A,
+                          grebni1B,
+                          canyoniNK1A,
+                          canyoni1B,
+                          canyoni2A,
+                          water,
+                          autonomityIndex,
+                          category);
+                      Get.to(EndingScreen(categoryRating: categoryRating));
+                    }
+                    else return;
                   },
                   style: ElevatedButton.styleFrom(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -1688,6 +1752,7 @@ int CategoryRating(
     int canyoni1B,
     int canyoni2A,
     bool water,
+    int autonomityIndex,
     int category) {
   double localObstacles = perepravi2A * 7.0 +
       perepravi1A + perepravi1B * 4.0 +
@@ -1705,13 +1770,9 @@ int CategoryRating(
     int localObstacles = LP_points[category];
   }
   final integralRating =
-      geograficalIndicator[regionIndex] * (1 + heightSlideValue / 12);
+      geograficalIndicator[regionIndex] * (1 + heightSlideValue / 12) * autonomyOpacity[autonomityIndex];
   int categoryRating = localObstacles.toInt() +
       extendedObstacles.toInt() +
       integralRating.toInt();
-  print("Локальные препятствия: $localObstacles");
-  print("Протяжённые препятствия: $extendedObstacles");
-  print("Интегральная оценка: $integralRating");
-  print("Набранные баллы: $categoryRating");
   return categoryRating;
 }

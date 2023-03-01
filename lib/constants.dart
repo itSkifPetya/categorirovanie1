@@ -1,5 +1,4 @@
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 
@@ -45,62 +44,313 @@ List<int> max_points4 = [0, 8, 18, 32, 46, 67];
 List<int> max_points5 = [4, 8, 20, 40, 56, 72];
 List<int> water_points = [0, 8, 20, 40, 56, 56];
 
+List<DropdownMenuItem<dynamic>> autonomities = [
+  DropdownMenuItem(
+    value: 'full',
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 3),
+          child: Icon(
+            Icons.route,
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ),
+        const SizedBox(
+          width: 11,
+        ),
+        const Text(
+          'Полная автономия',
+          maxLines: 3,
+        ),
+      ],
+    ),
+  ),
+  DropdownMenuItem(
+    value: 'partly',
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 3),
+          child: Icon(
+            Icons.route,
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ),
+        const SizedBox(
+          width: 11,
+        ),
+        const Text(
+          'Заброски или промежуточные базы',
+          maxLines: 3,
+        ),
+      ],
+    ),
+  ),
+  DropdownMenuItem(
+    value: 'one locality',
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 3),
+          child: Icon(
+            Icons.route,
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ),
+        const SizedBox(
+          width: 11,
+        ),
+        const Text(
+          'Один населённый пункт',
+          maxLines: 3,
+        ),
+      ],
+    ),
+  ),
+  DropdownMenuItem(
+    value: 'more locality',
+    child: Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 3),
+          child: Icon(
+            Icons.route,
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ),
+        const SizedBox(
+          width: 11,
+        ),
+        const Text(
+          'Несколько населённых пунктов',
+          maxLines: 3,
+        ),
+      ],
+    ),
+  )
+];
+
+List<String> autonomityValues = [
+  'full',
+  'partly',
+  'one locality',
+  'more locality'
+];
+
+List<double> autonomyOpacity = [1, 0.7, 0.5, 0.2];
+
 List<SearchFieldListItem<dynamic>> SearchFieldSuggestions = [
-  SearchFieldListItem("   Алтай"),
-  SearchFieldListItem("   Архангельская область"),
-  SearchFieldListItem("   Байкальский хребет"),
-  SearchFieldListItem("   Баргузинский хребет"),
-  SearchFieldListItem("   Белоруссия"),
-  SearchFieldListItem("   Верхнеангарский хребет"),
-  SearchFieldListItem("   Верхоянский хребет"),
-  SearchFieldListItem("   Вологодская область"),
-  SearchFieldListItem("   Восточный Кавказ"),
-  SearchFieldListItem("   Восточный Саян"),
-  SearchFieldListItem("   Горная Шория"),
-  SearchFieldListItem("   Джунгарский Алатау"),
-  SearchFieldListItem("   Европейская часть России"),
-  SearchFieldListItem("   Закавказье"),
-  SearchFieldListItem("   Западная Сибирь"),
-  SearchFieldListItem("   Западная Тыва"),
-  SearchFieldListItem("   Западный Кавказ"),
-  SearchFieldListItem("   Западный Саян"),
-  SearchFieldListItem("   Западный Тянь-Шань"),
-  SearchFieldListItem("   Земля Франца-Иосифа"),
-  SearchFieldListItem("   Икатский и Муйские хребты"),
-  SearchFieldListItem("   Камчатка (северная группа вулканов)"),
-  SearchFieldListItem("   Камчатка (Срединный и Восточный хребты)"),
-  SearchFieldListItem("   Камчатка (южная часть)"),
-  SearchFieldListItem("   Карелия"),
-  SearchFieldListItem("   Карпаты"),
-  SearchFieldListItem("   Кольский полуостров"),
-  SearchFieldListItem("   Корякское нагорье"),
-  SearchFieldListItem("   Крым"),
-  SearchFieldListItem("   Кузнецкий Алатау"),
-  SearchFieldListItem("   Курильские острова (сев.)"),
-  SearchFieldListItem("   Курильские острова (южн.)"),
-  SearchFieldListItem("   Ленинградская область"),
-  SearchFieldListItem("   Магаданская область"),
-  SearchFieldListItem("   Монгольский Алтай"),
-  SearchFieldListItem("   Новая Земля"),
-  SearchFieldListItem("   Памир"),
-  SearchFieldListItem("   Памиро-Алай"),
-  SearchFieldListItem("   Плато Путорана"),
-  SearchFieldListItem("   Полярный Урал"),
-  SearchFieldListItem("   Приморье"),
-  SearchFieldListItem("   Приполярный Урал"),
-  SearchFieldListItem("   Республика Коми"),
-  SearchFieldListItem("   Салаирский кряж"),
-  SearchFieldListItem("   Сахалин"),
-  SearchFieldListItem("   Северная Земля"),
-  SearchFieldListItem("   Северные тундровые районы"),
-  SearchFieldListItem("   Северный Тянь-Шань"),
-  SearchFieldListItem("   Северный Урал"),
-  SearchFieldListItem("   Средний Урал"),
-  SearchFieldListItem("   Средняя Азия и Казахстан (пуст.)"),
-  SearchFieldListItem("   Становой хребет и Алданское нагорье"),
-  SearchFieldListItem("   Украина"),
-  SearchFieldListItem("   Хабаровский край"),
-  SearchFieldListItem("   Хамар-Дабан"),
+  SearchFieldListItem('Алданское нагорье ',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Алданское нагорье ', style: searchTextStyle))),
+  SearchFieldListItem('Алтай',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Алтай', style: searchTextStyle))),
+  SearchFieldListItem('Архангельская область',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Архангельская область', style: searchTextStyle))),
+  SearchFieldListItem('Байкальский хребет',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Байкальский хребет', style: searchTextStyle))),
+  SearchFieldListItem('Баргузинский хребет',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Баргузинский хребет', style: searchTextStyle))),
+  SearchFieldListItem('Белоруссия',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Белоруссия', style: searchTextStyle))),
+  SearchFieldListItem('Верхнеангарский хребет',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Верхнеангарский хребет', style: searchTextStyle))),
+  SearchFieldListItem('Верхоянский хребет',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Верхоянский хребет', style: searchTextStyle))),
+  SearchFieldListItem('Вологодская область',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Вологодская область', style: searchTextStyle))),
+  SearchFieldListItem('Восточный Кавказ',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Восточный Кавказ', style: searchTextStyle))),
+  SearchFieldListItem('Восточный Саян',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Восточный Саян', style: searchTextStyle))),
+  SearchFieldListItem('Горная Шория',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Горная Шория', style: searchTextStyle))),
+  SearchFieldListItem('Джунгарский Алатау',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Джунгарский Алатау', style: searchTextStyle))),
+  SearchFieldListItem('Европейская часть России ',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Европейская часть России ', style: searchTextStyle))),
+  SearchFieldListItem('Закавказье',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Закавказье', style: searchTextStyle))),
+  SearchFieldListItem('Западная Сибирь',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Западная Сибирь', style: searchTextStyle))),
+  SearchFieldListItem('Западная Тыва',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Западная Тыва', style: searchTextStyle))),
+  SearchFieldListItem('Западный Кавказ',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Западный Кавказ', style: searchTextStyle))),
+  SearchFieldListItem('Западный Саян',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Западный Саян', style: searchTextStyle))),
+  SearchFieldListItem('Западный Тянь-Шань',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Западный Тянь-Шань', style: searchTextStyle))),
+  SearchFieldListItem('Земля Франца-Иосифа',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Земля Франца-Иосифа', style: searchTextStyle))),
+  SearchFieldListItem('Икатский хребет',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Икатский хребет', style: searchTextStyle))),
+  SearchFieldListItem('Казахстан',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Казахстан', style: searchTextStyle))),
+  SearchFieldListItem('Камчатка (северная группа вулканов)',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Камчатка (северная группа вулканов)',
+              style: searchTextStyle))),
+  SearchFieldListItem('Камчатка (Срединный и Восточный хребты)',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Камчатка (Срединный и Восточный хребты)',
+              style: searchTextStyle))),
+  SearchFieldListItem('Камчатка (южная часть)',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Камчатка (южная часть)', style: searchTextStyle))),
+  SearchFieldListItem('Карелия',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Карелия', style: searchTextStyle))),
+  SearchFieldListItem('Карпаты',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Карпаты', style: searchTextStyle))),
+  SearchFieldListItem('Кольский полуостров',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Кольский полуостров', style: searchTextStyle))),
+  SearchFieldListItem('Корякское нагорье ',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Корякское нагорье ', style: searchTextStyle))),
+  SearchFieldListItem('Крым',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Крым', style: searchTextStyle))),
+  SearchFieldListItem('Кузнецкий Алатау',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Кузнецкий Алатау', style: searchTextStyle))),
+  SearchFieldListItem('Курильские острова (сев.)',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Курильские острова (сев.)', style: searchTextStyle))),
+  SearchFieldListItem('Курильские острова (южн.)',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Курильские острова (южн.)', style: searchTextStyle))),
+  SearchFieldListItem('Ленинградская область',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Ленинградская область', style: searchTextStyle))),
+  SearchFieldListItem('Магаданская область',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Магаданская область', style: searchTextStyle))),
+  SearchFieldListItem('Монгольский Алтай ',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Монгольский Алтай ', style: searchTextStyle))),
+  SearchFieldListItem('Муйский хребет',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Муйский хребет', style: searchTextStyle))),
+  SearchFieldListItem('Новая Земля',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Новая Земля', style: searchTextStyle))),
+  SearchFieldListItem('Памир',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Памир', style: searchTextStyle))),
+  SearchFieldListItem('Памиро-Алай',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Памиро-Алай', style: searchTextStyle))),
+  SearchFieldListItem('Плато Путорана',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Плато Путорана', style: searchTextStyle))),
+  SearchFieldListItem('Полярный Урал',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Полярный Урал', style: searchTextStyle))),
+  SearchFieldListItem('Приморье',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Приморье', style: searchTextStyle))),
+  SearchFieldListItem('Приполярный Урал',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Приполярный Урал', style: searchTextStyle))),
+  SearchFieldListItem('Республика Коми',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Республика Коми', style: searchTextStyle))),
+  SearchFieldListItem('Салаирский кряж',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Салаирский кряж', style: searchTextStyle))),
+  SearchFieldListItem('Сахалин',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Сахалин', style: searchTextStyle))),
+  SearchFieldListItem('Северная Земля',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Северная Земля', style: searchTextStyle))),
+  SearchFieldListItem('Северные тундровые районы',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Северные тундровые районы', style: searchTextStyle))),
+  SearchFieldListItem('Северный Тянь-Шань',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Северный Тянь-Шань', style: searchTextStyle))),
+  SearchFieldListItem('Северный Урал',
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text('Северный Урал', style: searchTextStyle))),
 ];
 List<double> Kt = [
   0.6,
