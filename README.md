@@ -1,16 +1,7 @@
-# categorirovanie1
+# Категория сложности
 
-Caregoria Slozhnosti Zhavoronkov Peter's project
+Мобильное приложение для спортивного туризма на языке программирования Dart при помощи фреймворка Flutter
 
-## Getting Started
+## Подробнее
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Мобильное приложение Категория сложности разработано учеником ГБОУ Лицея №64 и Академии цифровых технологий города Санкт-Петербурга, а также воспитанник туристского клуба СКИФ в рамках школьного проекта "Разработка мобильного приложения для туристов на языке программирования Dart при помощи фреймворка Flutter"
